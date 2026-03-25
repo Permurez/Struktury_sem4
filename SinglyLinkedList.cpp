@@ -8,7 +8,12 @@ SinglyLinkedList::SinglyLinkedList() {
 
 
 SinglyLinkedList::~SinglyLinkedList() {
-
+    Node* current = head;
+    while (current != nullptr) {
+        Node* temp = current->next;
+        delete current;
+        current = temp;
+    }
 }
 
 void SinglyLinkedList::addFront(int value) {
@@ -31,9 +36,17 @@ void SinglyLinkedList::addBack(int value) {
 }
 
 void SinglyLinkedList::addAtIndex(int value, int index) {
-
+    if (index <= 0) { addFront(value); return; }
+    if (index >= size) { addBack(value); return; }
+    Node* newNode = new Node(value);
+    Node* current = head;
+    for (int i = 0; i < index - 1; i++) {
+        current = current->next;
+    }
+    newNode->next = current->next;
+    current->next = newNode;
+    size++;
 }
-
 void SinglyLinkedList::removeFront() {//odciecie sznura od glowy
 if (head == nullptr) return; // Lista jest pusta
     Node* temp = head;

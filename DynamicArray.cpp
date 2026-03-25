@@ -35,7 +35,16 @@ void DynamicArray::addBack(int value) {
     data[size] = value;
     size++;
 }
-
+void DynamicArray::addAtIndex(int value, int index) {
+    if (index <= 0) { addFront(value); return; }
+    if (index >= size) { addBack(value); return; }
+    if (size == capacity) resize();
+    for (int i = size; i > index; i--) {
+        data[i] = data[i - 1];
+    }
+    data[index] = value;
+    size++;
+}
 
 void DynamicArray::removeFront() {
     if (size == 0) return;
@@ -47,6 +56,15 @@ void DynamicArray::removeFront() {
 
 void DynamicArray::removeBack() {
     if (size == 0) return;
+    size--;
+}
+void DynamicArray::removeAtIndex(int index) {
+    if (size == 0) return;
+    if (index <= 0) { removeFront(); return; }
+    if (index >= size - 1) { removeBack(); return; }
+    for (int i = index; i < size - 1; i++) {
+        data[i] = data[i + 1];
+    }
     size--;
 }
 
