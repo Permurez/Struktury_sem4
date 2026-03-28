@@ -20,9 +20,10 @@ long long measureTime(Func func) {
 }
 template<typename Func>
 void run_test(const std::string& name, Func func){// & zeby szlo przez referencje
-    DynamicArray DA; SinglyLinkedList SLL; DoubleLinkedList DLL;//initializacja struktur 
-    for (int i = 0; i < PREFILL; i++) {
-    DA.addback(i);
+    DynamicArray DA ; SinglyLinkedList SLL; DoubleLinkedList DLL;//initializacja struktur 
+    for (int i = 0; i < PREFILL; i++)
+     {
+    DA.addBack(i);//IntelliSense tutaj cos halucynuje i podkreśla na czerwono, raczej jest dobrze
     SLL.addBack(i);
     DLL.addBack(i); //prefill struktur danych
     }

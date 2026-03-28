@@ -1,5 +1,4 @@
 #include "SignlyLinkedList.hpp"
-#pragma once
 SinglyLinkedList::SinglyLinkedList() {
     head = nullptr;
     tail = nullptr;
