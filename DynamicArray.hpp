@@ -21,4 +21,6 @@ public:
     void removeAtIndex(int index);
 
     bool find(int value);
+    void clear();
+    void display();
 };

@@ -1,4 +1,5 @@
 #include "DynamicArray.hpp"
+#include <iostream>
 
 DynamicArray::DynamicArray() {
     size = 0;
@@ -74,4 +75,13 @@ bool DynamicArray::find(int value) {
         if (data[i] == value) return true;
     }
     return false;
+}
+
+void DynamicArray::clear() {
+    size = 0; 
+}
+
+void DynamicArray::display() {
+    for (int i = 0; i < size; i++) std::cout << data[i] << " ";
+    std::cout << '\n';
 }

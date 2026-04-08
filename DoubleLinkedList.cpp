@@ -117,3 +117,16 @@ bool DoubleLinkedList::find(int value) {
     }
     return false;
 }
+#include <iostream>
+
+void DoubleLinkedList::clear() {
+    DNode* current = head;
+    while (current != nullptr) { DNode* temp = current->next; delete current; current = temp; }
+    head = tail = nullptr; size = 0;
+}
+
+void DoubleLinkedList::display() {
+    DNode* current = head;
+    while (current != nullptr) { std::cout << current->data << " "; current = current->next; }
+    std::cout << '\n';
+}

@@ -1,4 +1,5 @@
 #include "SignlyLinkedList.hpp"
+#include <iostream>
 SinglyLinkedList::SinglyLinkedList() {
     head = nullptr;
     tail = nullptr;
@@ -100,4 +101,15 @@ bool SinglyLinkedList::find(int value) {//szukanie po petli O(n)
         current = current->next;
     }
     return false;
+}
+void SinglyLinkedList::clear() {
+    Node* current = head;
+    while (current != nullptr) { Node* temp = current->next; delete current; current = temp; }
+    head = tail = nullptr; size = 0;
+}
+
+void SinglyLinkedList::display() {
+    Node* current = head;
+    while (current != nullptr) { std::cout << current->data << " "; current = current->next; }
+    std::cout << '\n';
 }
