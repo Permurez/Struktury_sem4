@@ -81,12 +81,14 @@ void SinglyLinkedList::removeBack() { //zlozonosc o(n) bo trzeba przejsc cala li
 
 void SinglyLinkedList::removeAtIndex(int index) {
 if (head == nullptr) return;
-else if (index < 0) return;
-else if (index == 0) {removeFront();return;}
+if (index < 0 || index >= size) return;
+if (index == 0) {removeFront();return;}
+
 Node* current = head;
 for (int i = 0; i < index - 1; i++) {
     current = current->next;
 }
+
 Node* toDelete = current->next;
 current->next = toDelete->next;
 if(toDelete == tail) {tail = current;}

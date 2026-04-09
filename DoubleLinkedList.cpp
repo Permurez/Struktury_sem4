@@ -90,7 +90,7 @@ void DoubleLinkedList::removeBack() { // Zlozonosc O(1) dzieki wskaznikowi prev
  
 void DoubleLinkedList::removeAtIndex(int index) {
     if (head == nullptr) return;
-    if (index < 0) return;
+    if (index < 0 || index >= size) return;
     if (index == 0) { removeFront(); return; }
     if (index == size - 1) { removeBack(); return; }
  
@@ -99,6 +99,8 @@ void DoubleLinkedList::removeAtIndex(int index) {
         if (current == nullptr) return; 
         current = current->next;
     }
+
+    if (current == nullptr) return;
  
     // Odpinamy current z lancucha
     current->previous->next = current->next;
