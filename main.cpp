@@ -9,9 +9,9 @@
 #include "SignlyLinkedList.hpp"
 #include "DoubleLinkedList.hpp"
 
-const int REPEAT_TIMES = 1000; // liczba operacji na jeden pomiar
-const int AVG_RUNS= 100;    // ile razy usredniamy każdy pomiar
-const int SEED_COUNT = 10;   // ile seedow do usredniania (zeby nie bylo halucynacji wynikow)
+const int REPEAT_TIMES = 50; // liczba operacji na jeden pomiar
+const int AVG_RUNS= 10;    // ile razy usredniamy każdy pomiar
+const int SEED_COUNT = 5;   // ile seedow do usredniania (zeby nie bylo halucynacji wynikow)
 
 // --- Infrastruktura pomiarowa ---
 

@@ -22,3 +22,4 @@ Excela zrović w ten sposób żeby w łatwy sposób porównywać do wykresów z�
 Zrović sobie kształty tych złożoności normalnych i po logarytmów jak to wygląda, najlepiej nałożyć na wykres 
 Można zroci na obu loga i wtedy to ma sporo sensu bo wraca do normalności 
 Ja (Kamil) wrzucam na eportal
+Po 3 godzinach testow decyzja na zmiane REPEAT_TIME=1000->50, AVG_RUNS=100->20 SEED_COUNT = 10->4 (dla n>35k)
