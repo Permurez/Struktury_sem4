@@ -23,3 +23,4 @@ Zrović sobie kształty tych złożoności normalnych i po logarytmów jak to wy
 Można zroci na obu loga i wtedy to ma sporo sensu bo wraca do normalności 
 Ja (Kamil) wrzucam na eportal
 Po 3 godzinach testow decyzja na zmiane REPEAT_TIME=1000->50, AVG_RUNS=100->20 SEED_COUNT = 10->4 (dla n>35k)
+Wyniki wyszly nieprzyjemne i trzeba wracac do 1000 powtorzen :) 
