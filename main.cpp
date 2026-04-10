@@ -35,11 +35,11 @@ TestResult operator/(const TestResult& value, long long divisor) {
 }
 
 template <typename Func>
-long long measureMicroseconds(Func func) {
+long long measureNanoseconds(Func func) {
     const auto start = std::chrono::high_resolution_clock::now();
     func();
     const auto end = std::chrono::high_resolution_clock::now();
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 }
 
 template <typename Func>
@@ -62,9 +62,9 @@ TestResult runSingleMeasurement(int initialSize, Operation operation) {
     }
 
     return {
-        measureMicroseconds([&] { operation(dynamicArray); }),
-        measureMicroseconds([&] { operation(singlyLinked); }),
-        measureMicroseconds([&] { operation(doublyLinked); })
+        measureNanoseconds([&] { operation(dynamicArray); }),
+        measureNanoseconds([&] { operation(singlyLinked); }),
+        measureNanoseconds([&] { operation(doublyLinked); })
     };
 }
 
@@ -77,7 +77,7 @@ TestResult runAverageMeasurement(int initialSize, Operation operation) {
         sum += runSingleMeasurement(initialSize, operation);
     }
 
-    return sum / AVG_RUNS;
+    return (sum / AVG_RUNS) / REPEAT_TIMES;
 }
 
 void printHeader() {
@@ -103,7 +103,7 @@ void runBenchmark() {
         80000, 85000, 90000, 95000, 100000
     };
 
-    std::cout << "\n=== Benchmark [mikrosekundy, srednia z " << AVG_RUNS << " pomiarow] ===\n";
+    std::cout << "\n=== Benchmark [nanosekundy/operacje, srednia z " << AVG_RUNS << " pomiarow] ===\n";
     std::cout << "Seed rotation: 67 68 69 70 71\n";
 
     for (int size : sizes) {
