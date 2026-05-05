@@ -1,0 +1,13 @@
+// Kopiec binarny MAX (tablica dynamiczna)
+// insert:      O(log n) - wstawienie na koniec + heapifyUp
+// extractMax:  O(log n) - zamiana korzenia z ostatnim + heapifyDown
+// peek:        O(1)     - odczyt korzenia
+// modifyKey:   O(n)     - liniowe wyszukanie + O(log n) naprawa
+// size:        O(1)
+// ----------------------------------------------------------------
+// Kolejka priorytetowa oparta na nieuposrzadkowanej liscie wiazanej.
+// insert:      O(1)  - wstawienie na poczatek
+// extractMax:  O(n)  - przeszukanie calej listy
+// peek:        O(n)  - przeszukanie calej listy
+// modifyKey:   O(n)  - wyszukanie po wartosci + zmiana priorytetu
+// size:        O(1)
