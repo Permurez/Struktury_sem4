@@ -18,7 +18,7 @@ int getRandom(int min, int max) {
 
 void runTests(int N) {
     cout << "======================================\n";
-    cout << "Rozpoczynam badania dla N = " << N << "\n";
+    cout << "   Wyniki pomiarow dla N = " << N << "\n";
     cout << "======================================\n";
 
     // Zakres priorytetów kilkukrotnie większy niż N
@@ -28,50 +28,44 @@ void runTests(int N) {
     HeapPQ heapPQ(N + 100); // Inicjalizacja kopca z zapasem pojemności
 
     // Wektory do zapamiętania wstawionych wartości (aby móc testować modifyKey)
-    vector<int> insertedValues;
+    vector<int> insertedValues(N);
+    vector<int> priorities(N);
+    for (int i = 0; i < N; i++) {
+        insertedValues[i] = getRandom(1, 10000000);
+        priorities[i] = getRandom(1, maxPriority);
+    }
 
-    // ---------------------------------------------------------
-    // 1. Badanie operacji INSERT
-    // ---------------------------------------------------------
+    // Badanie operacji INSERT
     auto start = high_resolution_clock::now();
     for (int i = 0; i < N; i++) {
-        int val = getRandom(1, 1000000);
-        int prio = getRandom(1, maxPriority);
-        listPQ.insert(val, prio);
-        insertedValues.push_back(val); // Zapisujemy wartość do późniejszych testów
+        listPQ.insert(insertedValues[i], priorities[i]);
     }
     auto stop = high_resolution_clock::now();
-    auto durationListInsert = duration_cast<microseconds>(stop - start);
+    auto durationListInsert = (duration_cast<nanoseconds>(stop - start))/N; // Średni czas na operację
 
     start = high_resolution_clock::now();
     for (int i = 0; i < N; i++) {
-        int val = insertedValues[i];
-        int prio = getRandom(1, maxPriority);
-        heapPQ.insert(val, prio);
+        heapPQ.insert(insertedValues[i], priorities[i]);
     }
     stop = high_resolution_clock::now();
-    auto durationHeapInsert = duration_cast<microseconds>(stop - start);
+    auto durationHeapInsert = (duration_cast<nanoseconds>(stop - start))/N; // Średni czas na operację
 
-    cout << "[INSERT] Lista: " << durationListInsert.count() << " us | Kopiec: " << durationHeapInsert.count() << " us\n";
+    cout << "[INSERT] Lista: " << durationListInsert.count() << " ns | Kopiec: " << durationHeapInsert.count() << " ns\n";
 
-    // ---------------------------------------------------------
-    // 2. Badanie operacji PEEK / FIND-MAX
-    // ---------------------------------------------------------
+    // Badanie operacji PEEK 
     start = high_resolution_clock::now();
     listPQ.peek();
     stop = high_resolution_clock::now();
-    auto durationListPeek = duration_cast<nanoseconds>(stop - start);
+    auto durationListPeek = duration_cast<microseconds>(stop - start);
 
     start = high_resolution_clock::now();
     heapPQ.peek();
     stop = high_resolution_clock::now();
-    auto durationHeapPeek = duration_cast<nanoseconds>(stop - start);
+    auto durationHeapPeek = duration_cast<microseconds>(stop - start);
 
-    cout << "[PEEK]   Lista: " << durationListPeek.count() << " ns | Kopiec: " << durationHeapPeek.count() << " ns\n";
+    cout << "[PEEK]   Lista: " << durationListPeek.count() << " us | Kopiec: " << durationHeapPeek.count() << " us\n";
 
-    // ---------------------------------------------------------
-    // 3. Badanie operacji RETURN-SIZE
-    // ---------------------------------------------------------
+    // Badanie operacji RETURN-SIZE
     start = high_resolution_clock::now();
     listPQ.size();
     stop = high_resolution_clock::now();
@@ -84,10 +78,8 @@ void runTests(int N) {
 
     cout << "[SIZE]   Lista: " << durationListSize.count() << " ns | Kopiec: " << durationHeapSize.count() << " ns\n";
 
-    // ---------------------------------------------------------
-    // 4. Badanie operacji MODIFY-KEY
+    // Badanie operacji MODIFY-KEY
     // Modyfikujemy 100 losowych, istniejących elementów
-    // ---------------------------------------------------------
     int modifications = 100;
     start = high_resolution_clock::now();
     for (int i = 0; i < modifications; i++) {
@@ -107,19 +99,10 @@ void runTests(int N) {
     stop = high_resolution_clock::now();
     auto durationHeapModify = duration_cast<microseconds>(stop - start);
 
-    cout << "[MODIFY] Lista: " << durationListModify.count() << " us | Kopiec: " << durationHeapModify.count() << " us (dla " << modifications << " prob)\n";
+    cout << "[MODIFY] Lista: " << durationListModify.count() << " us | Kopiec: " << durationHeapModify.count() << " us (dla " << modifications << " zmian)\n";
 
-    // ---------------------------------------------------------
-    // 5. Badanie operacji EXTRACT-MAX
+    // Badanie operacji EXTRACT-MAX
     // Wyciągamy wszystko aż struktury będą puste
-    // ---------------------------------------------------------
-    start = high_resolution_clock::now();
-    while (!listPQ.empty()) {
-        listPQ.extractMax();
-    }
-    stop = high_resolution_clock::now();
-    auto durationListExtract = duration_cast<microseconds>(stop - start);
-
     start = high_resolution_clock::now();
     while (!heapPQ.empty()) {
         heapPQ.extractMax();
@@ -127,7 +110,17 @@ void runTests(int N) {
     stop = high_resolution_clock::now();
     auto durationHeapExtract = duration_cast<microseconds>(stop - start);
 
-    cout << "[EXTRACT] Lista: " << durationListExtract.count() << " us | Kopiec: " << durationHeapExtract.count() << " us\n\n";
+    if (N <= 100000) {
+    start = high_resolution_clock::now();
+        while (!listPQ.empty()) listPQ.extractMax();
+        stop = high_resolution_clock::now();
+        auto durationListExtract = duration_cast<microseconds>(stop - start);
+        cout << "[EXTRACT] Lista: " << durationListExtract.count() << " us | ";
+    } else {
+        cout << "[EXTRACT] Lista: pomijam dla N > 100000 | ";
+    }
+
+    cout << "Kopiec: " << durationHeapExtract.count() << " us\n";
 }
 
 int main() {
