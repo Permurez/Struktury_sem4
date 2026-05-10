@@ -108,13 +108,13 @@ void runTests(int N) {
         heapPQ.extractMax();
     }
     stop = high_resolution_clock::now();
-    auto durationHeapExtract = duration_cast<microseconds>(stop - start);
+    auto durationHeapExtract = (duration_cast<nanoseconds>(stop - start))/N;//Średni czas zamiast całego
 
     if (N <= 100000) {
     start = high_resolution_clock::now();
         while (!listPQ.empty()) listPQ.extractMax();
         stop = high_resolution_clock::now();
-        auto durationListExtract = duration_cast<microseconds>(stop - start);
+        auto durationListExtract = duration_cast<nanoseconds>(stop - start);
         cout << "[EXTRACT] Lista: " << durationListExtract.count() << " us | ";
     } else {
         cout << "[EXTRACT] Lista: pomijam dla N > 100000 | ";
