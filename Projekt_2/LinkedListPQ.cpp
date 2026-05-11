@@ -67,7 +67,6 @@ ListNode LinkedListPQ::peek() const {
     }
 
 // Zmienia priorytet elementu o podanej wartosci 
-// Strategia przy rownych priorytetach: FIFO (kolejnosc wstawiania)
 void LinkedListPQ::modifyKey(int value, int newPriority) {
         ListNode* curr = head;
         while (curr) {
