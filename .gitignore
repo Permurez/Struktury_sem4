@@ -1,0 +1,11 @@
+# Build artifacts
+*.exe
+*.out
+out*.txt
+
+# VS Code
+.vscode/
+
+# Temporary
+*.tmp
+*.log
