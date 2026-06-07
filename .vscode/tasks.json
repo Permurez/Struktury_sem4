@@ -11,6 +11,9 @@
                 "-Wall",
                 "-Wextra",
                 "main.cpp",
+                "hash_chaining.cpp",
+                "hash_open_addressing.cpp",
+                "hash_avl.cpp",
                 "-o",
                 "app.exe"
             ],

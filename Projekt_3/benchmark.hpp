@@ -20,7 +20,7 @@ using Clock  = std::chrono::high_resolution_clock;
 using Micros = std::chrono::microseconds;
 using Nanos = std::chrono::nanoseconds;
 
-// Mierzy czas wykonania funkcji fn w nanosekundach
+// Mierzy czas wykonania funkcji fn w mikrosekundach
 template<typename Fn>
 inline long long measureUs(Fn fn) {
     auto t0 = Clock::now();
@@ -28,7 +28,7 @@ inline long long measureUs(Fn fn) {
     return std::chrono::duration_cast<Nanos>((Clock::now() - t0)).count();
 }
 
-//Generacja kluczy z zapewnieniem kolizji dla badań
+// Generuje n unikalnych kluczy w losowej kolejności (shuffle zakresu [0, n))
 inline std::vector<int> generateKeys(int n, int seed) {
     std::vector<int> keys(n);
     std::mt19937 gen(seed);
@@ -40,7 +40,6 @@ inline std::vector<int> generateKeys(int n, int seed) {
     }
     return keys;
 }
-
 // Uruchamia benchmark dla dowolnej tablicy mieszającej HT
 // HT musi mieć: insert(int, int), remove(int), clear()
 template<typename HT>
@@ -49,8 +48,8 @@ void runBenchmark(const std::string& name) {
 
     std::cout << "\n=== " << name << " ===\n";
     std::cout << std::setw(10) << "n"
-              << std::setw(18) << "insert [µs]"
-              << std::setw(18) << "remove [µs]" << "\n";
+              << std::setw(18) << "insert [ns]"
+              << std::setw(18) << "remove [ns]" << "\n";
     std::cout << std::string(46, '-') << "\n";
 
     for (int n : BENCH_SIZES) {
@@ -60,15 +59,15 @@ void runBenchmark(const std::string& name) {
             auto keys = generateKeys(n, seed);
 
             // Pojemność 2×n → współczynnik wypełnienia ~0.5, mało kolizji
-            HT ht(n * 2);
+            HT ht(n);
 
             totalInsert += (measureUs([&]() {
                 for (int k : keys) ht.insert(k, k * 7);
-            }))\n;
+            }))/n; // średni czas wstawienia pojedynczego klucza
 
             totalRemove += (measureUs([&]() {
                 for (int k : keys) ht.remove(k);
-            }))\n;
+            }))/n; // średni czas usunięcia pojedynczego klucza
 
             ht.clear();
         }
