@@ -11,7 +11,7 @@
 // ─── Konfiguracja benchmarku ───────────────────────────────────────────────
 // Zmień tutaj żeby dostosować eksperyment
 
-const std::vector<int> BENCH_SIZES = {1000, 5000, 10000, 50000, 100000};
+const std::vector<int> BENCH_SIZES = {1000, 3000, 5000, 10000, 30000, 50000, 80000, 100000};
 const std::vector<int> BENCH_SEEDS = {42, 137, 999, 2025, 31415};
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -55,13 +55,13 @@ void runBenchmark(const std::string& name) {
             // Pojemność 2×n → współczynnik wypełnienia ~0.5, mało kolizji
             HT ht(n * 2);
 
-            totalInsert += measureUs([&]() {
+            totalInsert += (measureUs([&]() {
                 for (int k : keys) ht.insert(k, k * 7);
-            });
+            }))\n;
 
-            totalRemove += measureUs([&]() {
+            totalRemove += (measureUs([&]() {
                 for (int k : keys) ht.remove(k);
-            });
+            }))\n;
 
             ht.clear();
         }
