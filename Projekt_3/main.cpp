@@ -1,9 +1,9 @@
 #include <iostream>
 #include "benchmark.hpp"
-#include "avl_tree.cpp"
-#include "hash_open_addressing.cpp"
-#include "hash_avl.cpp"
-#include "hash_chaining.cpp"
+#include "avl_tree.hpp"
+#include "hash_open_addressing.hpp"
+#include "hash_avl.hpp"
+#include "hash_chaining.hpp"
 
 int main() {
     std::cout << "Miniprojekt 3 - Benchmarki tablic mieszajacych\n";
